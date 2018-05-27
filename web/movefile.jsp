@@ -1,0 +1,130 @@
+<%@ page import="com.cse406.cloud.entity.FileEntity" %>
+<%@ page import="com.cse406.cloud.dao.AccessoryDao" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: lrh
+  Date: 2018/5/26
+  Time: 上午3:42
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <title>Move file</title>
+</head>
+<body>
+
+<div id="container" style="width: 1960px;height: auto">
+
+
+
+    <div id="header" style="background-color:#FFA500;">
+        <h1 style="margin-bottom:0;">Private Cloud</h1></div>
+
+    <div id="content1" style="background-color:#EEEEEE; width: 1960px; height: auto ">
+        <h2>Create Directory</h2>
+        <form method="get" action="/createdirectory" enctype="multipart/form-data">
+            <input type="text" name="directory" />
+            <input type="hidden" name="idNo" value="<%=request.getParameter("id")%>"/>
+            <br/><br/>
+            <input type="submit" value="Create"/>
+        </form>
+
+    </div>
+
+
+
+
+    <div id="content" style="background-color:#EEEEEE;height:auto;width:1960px;align-content: center;text-align: center">
+        <%
+            List<FileEntity> fileList1 = AccessoryDao.list(request.getParameter("id"));
+            if(fileList1.size()!=0) {
+                String tempDirectory = fileList1.get(0).getFileFatherDirectoryForView();
+                String fileDirectory = tempDirectory;
+                while (!tempDirectory.equals("root")) {
+                    FileEntity directoryEntity = AccessoryDao.query(tempDirectory);
+                    tempDirectory = directoryEntity.getFileFatherDirectoryForView();
+                    fileDirectory = tempDirectory + "/" + fileDirectory;
+                }
+                out.print("<h2>" + "Current Directory: /" + fileDirectory + "</h2>");
+            }
+
+        %>
+
+        <br><br>
+
+        <h2>file list</h2>
+
+        <table  border="" cellspacing="0" cellpadding="2" align="center" style="border-collapse: collapse; align-content: center">
+            <tr>
+                <th>File name</th>
+                <th>File size (KB)</th>
+                <th>Operation</th>
+            </tr>
+
+            <%
+                int originID = Integer.parseInt(request.getParameter("id"));
+                FileEntity entity = AccessoryDao.query(originID);
+                String fatherDirectory = entity.getFileFatherDirectoryForView();
+                List<FileEntity> fileList = AccessoryDao.list("root");
+
+                for(FileEntity file:fileList){
+                    if(!file.getFile_ext_name().equals("directory")) {
+                        int fileId = file.getId();
+                        out.print("<tr><td>" + file.getFileName() + "</td>\n");
+                        out.print("<td>" + file.getFileSize() + "</td>\n");
+                        out.print("<td><a href=\"/delete?id=" + fileId + "\">Delete</a>" + "&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                "<a href=\"/download?id=" + fileId + "\">Download</a>"
+                                + "</td></tr>\n");
+                    }
+                }
+            %>
+
+
+        </table>
+
+        <br><br>
+        <h2>directory list</h2>
+
+        <table  border="" cellspacing="0" cellpadding="2" align="center" style="border-collapse: collapse; align-content: center">
+            <tr>
+                <th>Directory name</th>
+                <th>Operation</th>
+            </tr>
+
+            <%
+
+
+                for(FileEntity file:fileList){
+                    if(file.getFile_ext_name().equals("directory")) {
+                        int fileId = file.getId();
+                        out.print("<tr><td>" + file.getFileName() + "</td>\n");
+                        out.print("<td><a href=\"/delete?id=" + fileId + "\">Delete</a>" + "&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                "<a href=\"/movefileenter.jsp?originid="+originID+"&id="+fileId+"\">Enter</a>"+"&nbsp;&nbsp;&nbsp;&nbsp;"+
+                                "<a href=\"/movehere?originid="+originID+"&id="+fileId+"\">Move here</a>"+
+                                 "</td></tr>\n");
+                    }
+                }
+            %>
+
+        </table>
+
+
+    </div>
+
+    <div id="footer" style="background-color:#FFA500;clear:both;text-align:center;align-items: end">
+        CopyRight © CSE406</div>
+
+</div>
+
+
+
+
+
+</body>
+</html>

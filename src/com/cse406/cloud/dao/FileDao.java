@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccessoryDao {
+public class FileDao {
     public static FileEntity query(int id){
         Connection conn = DBUtil.getConnection();
         String sql = "select id, file_name, file_size, file_ext_name, file_realpath, file_uuid,file_viewfather, userid  from tbl_file where id=?";

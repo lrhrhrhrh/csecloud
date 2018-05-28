@@ -1,5 +1,5 @@
 <%@ page import="com.cse406.cloud.entity.FileEntity" %>
-<%@ page import="com.cse406.cloud.dao.AccessoryDao" %>
+<%@ page import="com.cse406.cloud.dao.FileDao" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -30,12 +30,12 @@
 
     <div id="content" style="background-color:#EEEEEE;height:auto;width:1960px;align-content: center;text-align: center">
         <%
-            List<FileEntity> fileList = AccessoryDao.list(request.getParameter("directory"));
+            List<FileEntity> fileList = FileDao.list(request.getParameter("directory"));
             if(fileList.size()!=0) {
                 String tempDirectory = fileList.get(0).getFileFatherDirectoryForView();
                 String fileDirectory = tempDirectory;
                 while (!tempDirectory.equals("root")) {
-                    FileEntity directoryEntity = AccessoryDao.query(tempDirectory);
+                    FileEntity directoryEntity = FileDao.query(tempDirectory);
                     tempDirectory = directoryEntity.getFileFatherDirectoryForView();
                     fileDirectory = tempDirectory + "/" + fileDirectory;
                 }
@@ -81,7 +81,7 @@
             </tr>
 
             <%
-                //                List<FileEntity> fileList2 = AccessoryDao.list("root");
+                //                List<FileEntity> fileList2 = FileDao.list("root");
                 for(FileEntity file:fileList){
                     if(file.getFile_ext_name().equals("directory")) {
                         int fileId = file.getId();

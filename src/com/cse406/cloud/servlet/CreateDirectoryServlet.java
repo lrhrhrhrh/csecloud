@@ -1,6 +1,6 @@
 package com.cse406.cloud.servlet;
 
-import com.cse406.cloud.dao.AccessoryDao;
+import com.cse406.cloud.dao.FileDao;
 import com.cse406.cloud.entity.FileEntity;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class CreateDirectoryServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("idNo"));
         String directoryName = request.getParameter("directory");
-        FileEntity entity = AccessoryDao.query(id);
+        FileEntity entity = FileDao.query(id);
         String fatherPath = entity.getFileFatherDirectoryForView();
 
         FileEntity directoryEntity = new FileEntity();
@@ -28,8 +28,8 @@ public class CreateDirectoryServlet extends HttpServlet {
         directoryEntity.setFileFatherDirectoryForView(entity.getFileFatherDirectoryForView());
         directoryEntity.setFile_ext_name("directory");
 
-        AccessoryDao.add(directoryEntity);
-        AccessoryDao.updateFatherDirectory(id,directoryName);
+        FileDao.add(directoryEntity);
+        FileDao.updateFatherDirectory(id,directoryName);
 
         PrintWriter out = response.getWriter();
         out.println(directoryName);

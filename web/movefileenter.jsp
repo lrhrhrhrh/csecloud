@@ -15,7 +15,7 @@
 </body>
 </html>
 <%@ page import="com.cse406.cloud.entity.FileEntity" %>
-<%@ page import="com.cse406.cloud.dao.AccessoryDao" %>
+<%@ page import="com.cse406.cloud.dao.FileDao" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
@@ -67,9 +67,9 @@
             <%
                 int originID = Integer.parseInt(request.getParameter("originid"));
                 int id = Integer.parseInt(request.getParameter("id"));
-                FileEntity entity = AccessoryDao.query(id);
+                FileEntity entity = FileDao.query(id);
                 String fatherDirectory = entity.getFileName();
-                List<FileEntity> fileList = AccessoryDao.list(fatherDirectory);
+                List<FileEntity> fileList = FileDao.list(fatherDirectory);
 
                 for(FileEntity file:fileList){
                     if(!file.getFile_ext_name().equals("directory")) {

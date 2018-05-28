@@ -1,6 +1,6 @@
 package com.cse406.cloud.servlet;
 
-import com.cse406.cloud.dao.AccessoryDao;
+import com.cse406.cloud.dao.FileDao;
 import com.cse406.cloud.entity.FileEntity;
 
 import javax.servlet.ServletContext;
@@ -18,7 +18,7 @@ import java.io.OutputStream;
 public class DownloadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer id = Integer.parseInt(request.getParameter("id"));
-        FileEntity entity = AccessoryDao.query(id);
+        FileEntity entity = FileDao.query(id);
         ServletContext context = this.getServletContext();
 
         String path = entity.getFilePath();

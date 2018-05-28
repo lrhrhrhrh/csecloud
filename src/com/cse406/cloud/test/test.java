@@ -1,7 +1,10 @@
 package com.cse406.cloud.test;
 
-import com.cse406.cloud.dao.AccessoryDao;
+import com.cse406.cloud.dao.FileDao;
+import com.cse406.cloud.dao.FileDao;
+import com.cse406.cloud.dao.UserDao;
 import com.cse406.cloud.entity.FileEntity;
+import com.cse406.cloud.entity.UserEntity;
 import com.cse406.cloud.util.DBUtil;
 
 import java.math.BigDecimal;
@@ -15,7 +18,7 @@ import java.util.UUID;
 
 public class test {
     public static void main(String[] args){
-//        List<FileEntity> fileList = AccessoryDao.list();
+//        List<FileEntity> fileList = FileDao.list();
 //        for(FileEntity file : fileList) {
 //            System.out.println(file);
 //        }
@@ -73,21 +76,31 @@ public class test {
 //            System.out.println("Fuck");
 //        }
 
-//        FileEntity entity = AccessoryDao.query(2);
+//        FileEntity entity = FileDao.query(2);
 //        System.out.println(entity);
 //        System.out.println(entity.getFilePath());
 
-        String fileDirectory = "third";
-        String tempDirectory = "third";
+//        String fileDirectory = "third";
+//        String tempDirectory = "third";
+//
+//        while(!tempDirectory.equals("root")){
+//            FileEntity directoryEntity = FileDao.query(tempDirectory);
+//            tempDirectory = directoryEntity.getFileFatherDirectoryForView();
+//            fileDirectory = tempDirectory+"/"+fileDirectory;
+//        }
+//        fileDirectory = "/"+fileDirectory;
+//
+//        System.out.println(fileDirectory);
 
-        while(!tempDirectory.equals("root")){
-            FileEntity directoryEntity = AccessoryDao.query(tempDirectory);
-            tempDirectory = directoryEntity.getFileFatherDirectoryForView();
-            fileDirectory = tempDirectory+"/"+fileDirectory;
-        }
-        fileDirectory = "/"+fileDirectory;
+        UserEntity user = new UserEntity();
+        user.setName("jack");
+        user.setPassword("13");
+        user.setEmail("jack@haha.com");
 
-        System.out.println(fileDirectory);
+//        UserDao.register(user);
+        UserEntity entity = UserDao.login(user);
+        System.out.println(entity);
+
 
 
     }

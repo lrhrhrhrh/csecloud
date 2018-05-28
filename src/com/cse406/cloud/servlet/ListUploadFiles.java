@@ -1,6 +1,6 @@
 package com.cse406.cloud.servlet;
 
-import com.cse406.cloud.dao.AccessoryDao;
+import com.cse406.cloud.dao.FileDao;
 import com.cse406.cloud.entity.FileEntity;
 
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.util.List;
 @WebServlet("/ListUploadFiles")
 public class ListUploadFiles extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<FileEntity> fileList = AccessoryDao.list();
+        List<FileEntity> fileList = FileDao.list();
         request.setAttribute("fileList", fileList);
 
         request.getRequestDispatcher("/list.jsp").forward(request,response);
@@ -24,7 +24,7 @@ public class ListUploadFiles extends HttpServlet {
 
     }
     public static void main(String[] args){
-        List<FileEntity> fileList = AccessoryDao.list();
+        List<FileEntity> fileList = FileDao.list();
         System.out.println(fileList);
     }
 }

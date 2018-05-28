@@ -1,6 +1,6 @@
 package com.cse406.cloud.servlet;
 
-import com.cse406.cloud.dao.AccessoryDao;
+import com.cse406.cloud.dao.FileDao;
 import com.cse406.cloud.entity.FileEntity;
 
 import javax.servlet.ServletException;
@@ -16,9 +16,9 @@ public class MoveServlet extends HttpServlet {
         int originID = Integer.parseInt(request.getParameter("originid"));
         int id = Integer.parseInt(request.getParameter("id"));
 
-        FileEntity entity =  AccessoryDao.query(id);
+        FileEntity entity =  FileDao.query(id);
 
-        AccessoryDao.updateFatherDirectory(originID,entity.getFileName());
+        FileDao.updateFatherDirectory(originID,entity.getFileName());
         response.sendRedirect("/list.jsp");
     }
 

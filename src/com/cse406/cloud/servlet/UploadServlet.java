@@ -1,6 +1,7 @@
 package com.cse406.cloud.servlet;
 
-import com.cse406.cloud.dao.AccessoryDao;
+import com.cse406.cloud.dao.FileDao;
+import com.cse406.cloud.dao.FileDao;
 import com.cse406.cloud.entity.FileEntity;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadBase;
@@ -219,7 +220,7 @@ public class UploadServlet extends HttpServlet {
                     entity.setFileFatherDirectoryForView("root");
                     entity.setFileUUID(fileUUID);
 //                    entity.setUserId();
-                    AccessoryDao.add(entity);
+                    FileDao.add(entity);
                 }
 
             }

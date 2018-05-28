@@ -37,7 +37,6 @@
             </td>
             <td>
                 <input type="submit" value="Sign in"/>
-                <input type="submit" value="Reset"/>
                 <a href="register.jsp" target="_blank">Sign up</a>
             </td>
         </tr>

@@ -93,13 +93,15 @@ public class test {
 //        System.out.println(fileDirectory);
 
         UserEntity user = new UserEntity();
-        user.setName("jack");
-        user.setPassword("13");
+        user.setId(3);
+        user.setName("haohao");
+        user.setPassword("123");
         user.setEmail("jack@haha.com");
 
 //        UserDao.register(user);
-        UserEntity entity = UserDao.login(user);
-        System.out.println(entity);
+//        UserEntity entity = UserDao.login(user);
+        List<FileEntity> list = FileDao.list(user);
+        System.out.println(list);
 
 
 

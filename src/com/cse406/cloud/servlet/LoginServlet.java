@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -26,10 +27,13 @@ public class LoginServlet extends HttpServlet {
         UserEntity userEntity = UserDao.login(user);
         if(userEntity!=null){
             request.setAttribute("info", "Login successfully");
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
+//            request.setAttribute("user", userEntity);
+            HttpSession session = request.getSession();
+            session.setAttribute("user",userEntity);
+            request.getRequestDispatcher("/loginsuccessfully.jsp").forward(request,response);
         }else{
             request.setAttribute("info", "Login failure");
-            request.getRequestDispatcher("/info.jsp").forward(request,response);
+            request.getRequestDispatcher("/loginfailure.jsp").forward(request,response);
         }
 
     }

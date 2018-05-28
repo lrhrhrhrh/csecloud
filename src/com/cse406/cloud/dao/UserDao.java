@@ -34,6 +34,23 @@ public class UserDao {
         return false;
     }
 
+//    public static UserEntity query(UserEntity user){
+//        Connection con = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//        try{
+//            con = DBUtil.getConnection();
+//            String sql="select * from tbl_user where name=? and password=?";
+//            ps = con.prepareStatement(sql);
+//            ps.setString(1, user.getName());
+//            ps.setString(2, user.getPassword());
+//
+//
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//    }
+
     public static UserEntity login(UserEntity user){
         Connection con = null;
         PreparedStatement ps = null;
@@ -53,7 +70,7 @@ public class UserDao {
                 userEntity.setPassword(rs.getString("password"));
                 userEntity.setEmail(rs.getString("email"));
 
-                return user;
+                return userEntity;
             }else{
                 return null;
             }

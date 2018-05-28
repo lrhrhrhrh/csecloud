@@ -30,14 +30,14 @@ public class RegisterServlet extends HttpServlet {
             boolean flag = UserDao.register(user);
             if(flag){
                 request.setAttribute("info", "Register successfully");
-                request.getRequestDispatcher("/login.jsp").forward(request,response);
+                request.getRequestDispatcher("/registersuccessfully.jsp").forward(request,response);
             }else{
                 request.setAttribute("info", "Register failure");
-                request.getRequestDispatcher("/info.jsp").forward(request,response);
+                request.getRequestDispatcher("/registerfailure.jsp").forward(request,response);
             }
         }else
             request.setAttribute("info", "Register failure");
-            request.getRequestDispatcher("/info.jsp").forward(request,response);
+            request.getRequestDispatcher("/registerfailure.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

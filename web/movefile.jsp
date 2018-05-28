@@ -1,6 +1,7 @@
 <%@ page import="com.cse406.cloud.entity.FileEntity" %>
 <%@ page import="com.cse406.cloud.dao.FileDao" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.cse406.cloud.entity.UserEntity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -42,7 +43,9 @@
 
     <div id="content" style="background-color:#EEEEEE;height:auto;width:1960px;align-content: center;text-align: center">
         <%
-            List<FileEntity> fileList1 = FileDao.list(request.getParameter("id"));
+
+            UserEntity user = (UserEntity)session.getAttribute("user");
+            List<FileEntity> fileList1 = FileDao.list(request.getParameter("id"),user);
             if(fileList1.size()!=0) {
                 String tempDirectory = fileList1.get(0).getFileFatherDirectoryForView();
                 String fileDirectory = tempDirectory;
@@ -71,7 +74,7 @@
                 int originID = Integer.parseInt(request.getParameter("id"));
                 FileEntity entity = FileDao.query(originID);
                 String fatherDirectory = entity.getFileFatherDirectoryForView();
-                List<FileEntity> fileList = FileDao.list("root");
+                List<FileEntity> fileList = FileDao.list("root",user);
 
                 for(FileEntity file:fileList){
                     if(!file.getFile_ext_name().equals("directory")) {

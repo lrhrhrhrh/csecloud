@@ -1,8 +1,10 @@
 package com.cse406.cloud.dao;
 
 import com.cse406.cloud.entity.FileEntity;
+import com.cse406.cloud.entity.UserEntity;
 import com.cse406.cloud.util.DBUtil;
 
+import javax.swing.text.html.parser.Entity;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -82,7 +84,7 @@ public class FileDao {
         }
     }
 
-    public static void add(FileEntity entity){
+    public static void add(FileEntity entity, UserEntity user){
         Connection conn = DBUtil.getConnection();
         String sql = "insert into tbl_file(file_name, file_size, file_ext_name, file_realpath, file_uuid,file_viewfather, userid)value (?,?,?,?,?,?,?)";
         try{
@@ -93,7 +95,8 @@ public class FileDao {
             ps.setString(4, entity.getFilePath());
             ps.setString(5,entity.getFileUUID());
             ps.setString(6, entity.getFileFatherDirectoryForView());
-            ps.setInt(7, entity.getUserId());
+            ps.setInt(7, user.getId());
+
 
             ps.execute();
 
@@ -104,12 +107,13 @@ public class FileDao {
         }
     }
 
-    public static List<FileEntity> list(){
+    public static List<FileEntity> list(UserEntity user){
         Connection conn = DBUtil.getConnection();
-        String sql = "select id, file_name, file_size, file_ext_name, file_realpath, file_uuid,file_viewfather, userid from tbl_file";
+        String sql = "select id, file_name, file_size, file_ext_name, file_realpath, file_uuid,file_viewfather from tbl_file where userid=?";
         List<FileEntity> fileList = new ArrayList<>();
         try{
             PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,user.getId());
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -121,7 +125,7 @@ public class FileDao {
                 entity.setFilePath(rs.getString("file_realpath"));
                 entity.setFileUUID(rs.getString("file_uuid"));
                 entity.setFileFatherDirectoryForView(rs.getString("file_viewfather"));
-                entity.setUserId(rs.getInt("userid"));
+//                entity.setUserId(rs.getInt("userid"));
                 fileList.add(entity);
             }
 
@@ -133,13 +137,14 @@ public class FileDao {
         return fileList;
     }
 
-    public static List<FileEntity> list(String directory){
+    public static List<FileEntity> list(String directory, UserEntity user){
         Connection conn = DBUtil.getConnection();
-        String sql = "select id, file_name, file_size, file_ext_name, file_realpath, file_uuid,file_viewfather, userid from tbl_file where file_viewfather=?";
+        String sql = "select id, file_name, file_size, file_ext_name, file_realpath, file_uuid,file_viewfather from tbl_file where file_viewfather=? and userid=?";
         List<FileEntity> fileList = new ArrayList<>();
         try{
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1,directory);
+            ps.setInt(2,user.getId());
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -151,7 +156,7 @@ public class FileDao {
                 entity.setFilePath(rs.getString("file_realpath"));
                 entity.setFileUUID(rs.getString("file_uuid"));
                 entity.setFileFatherDirectoryForView(rs.getString("file_viewfather"));
-                entity.setUserId(rs.getInt("userid"));
+//                entity.setUserId(rs.getInt("userid"));
                 fileList.add(entity);
             }
 

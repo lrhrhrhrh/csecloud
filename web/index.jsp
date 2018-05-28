@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.cse406.cloud.entity.UserEntity" %><%--
   Created by IntelliJ IDEA.
   User: lrh
   Date: 2018/5/24
@@ -11,7 +11,12 @@
     <title>$Title$</title>
   </head>
   <body>
-  <jsp:forward page="list.jsp"/>
+  <%
+    UserEntity user = (UserEntity)session.getAttribute("user");
+//    UserEntity user = (UserEntity).getAttribute("user");
+    out.print(user.toString());
+  %>
+  <%--<jsp:forward page="list.jsp"/>--%>
 
   </body>
 </html>

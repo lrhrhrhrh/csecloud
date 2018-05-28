@@ -1,6 +1,7 @@
 <%@ page import="com.cse406.cloud.entity.FileEntity" %>
 <%@ page import="com.cse406.cloud.dao.FileDao" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.cse406.cloud.entity.UserEntity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -41,7 +42,8 @@
 
     <div id="content" style="background-color:#EEEEEE;height:auto;width:1960px;align-content: center;text-align: center">
         <%
-            List<FileEntity> fileList = FileDao.list("root");
+
+            List<FileEntity> fileList = FileDao.list("root",(UserEntity) session.getAttribute("user"));
             if(fileList.size()!=0)
             out.print("<h2>"+ "Current Directory: /"+fileList.get(0).getFileFatherDirectoryForView()+"</h2>");
 
